@@ -1,4 +1,4 @@
 ﻿  Client.cpp
-c:\users\ath\git\client\tcp.ip_client\tcp.ip_client\client.cpp(68): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\ath\git\client\tcp.ip_client\tcp.ip_client\client.cpp(75): warning C4244: '초기화 중': 'SOCKET'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Tcp.ip_Client.vcxproj -> C:\Users\ATH\git\client\Tcp.ip_Client\x64\Debug\Tcp.ip_Client.exe
+c:\users\ath\git\client_\tcp.ip_client\tcp.ip_client\client.cpp(69): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\ath\git\client_\tcp.ip_client\tcp.ip_client\client.cpp(76): warning C4244: '초기화 중': 'SOCKET'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Tcp.ip_Client.vcxproj -> C:\Users\ATH\git\Client_\Tcp.ip_Client\x64\Debug\Tcp.ip_Client.exe
