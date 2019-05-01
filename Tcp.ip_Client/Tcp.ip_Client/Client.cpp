@@ -75,7 +75,7 @@ unsigned WINAPI RecvMsg(void * arg)   // read thread main
 {
 	int hSock = *((SOCKET*)arg);
 	char nameMsg[NAME_SIZE + BUF_SIZE];
-	//strcat_s(nameMsg, "");
+	//strcat_s(nameMsg, ""); 
 
 	int strLen;
 	while (1)
