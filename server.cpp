@@ -77,6 +77,7 @@ void * handle_clnt(void * arg)
 	int clnt_sock =* ((int*) arg);
 	int str_len = 0, i;
 	char msg[BUF_SIZE];
+	(const char*)strcat(msg, (const char*)"");
 
 	while((str_len = read ( clnt_sock, msg, sizeof(msg))) != 0 )
 		send_msg(msg, str_len);
