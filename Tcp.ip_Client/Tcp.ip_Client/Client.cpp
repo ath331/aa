@@ -60,6 +60,7 @@ unsigned WINAPI SendMsg(void * arg)   // send thread main
 	while (1)
 	{
 		fgets(msg, BUF_SIZE, stdin);
+		strcat_s(msg, ""); //입력한 문자에 NULL추가
 		if (!strcmp(msg, "q\n") || !strcmp(msg, "Q\n"))
 		{
 			closesocket(hSock);
@@ -75,10 +76,9 @@ unsigned WINAPI RecvMsg(void * arg)   // read thread main
 {
 	int hSock = *((SOCKET*)arg);
 	char nameMsg[NAME_SIZE + BUF_SIZE];
-	//strcat_s(nameMsg, ""); 
 
 	int strLen;
-	while (1)
+	while (1) //받을때도 null까지 받아야하나?? 서버에서 null까지만보내주면 될거같다
 	{
 		strLen = recv(hSock, nameMsg, NAME_SIZE + BUF_SIZE - 1, 0);
 		if (strLen == -1)
