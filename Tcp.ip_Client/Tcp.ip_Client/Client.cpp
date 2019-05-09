@@ -7,7 +7,7 @@
 #define BUF_SIZE 100
 #define NAME_SIZE 20
 
-unsigned WINAPI SendMsg(void * arg);//후;;; 깃허브 날아갈뻔?
+unsigned WINAPI SendMsg(void * arg);
 unsigned WINAPI RecvMsg(void * arg);
 void ErrorHandling(const char * msg);
 
@@ -56,9 +56,11 @@ unsigned WINAPI SendMsg(void * arg)   // send thread main
 {
 	SOCKET hSock = *((SOCKET*)arg);
 	char nameMsg[NAME_SIZE + BUF_SIZE];
+
 	while (1)
 	{
 		fgets(msg, BUF_SIZE, stdin);
+		strcat_s(msg, ""); //입력한 문자에 NULL추가
 		if (!strcmp(msg, "q\n") || !strcmp(msg, "Q\n"))
 		{
 			closesocket(hSock);
@@ -74,8 +76,9 @@ unsigned WINAPI RecvMsg(void * arg)   // read thread main
 {
 	int hSock = *((SOCKET*)arg);
 	char nameMsg[NAME_SIZE + BUF_SIZE];
+
 	int strLen;
-	while (1)
+	while (1) //받을때도 null까지 받아야하나?? 서버에서 null까지만보내주면 될거같다
 	{
 		strLen = recv(hSock, nameMsg, NAME_SIZE + BUF_SIZE - 1, 0);
 		if (strLen == -1)
