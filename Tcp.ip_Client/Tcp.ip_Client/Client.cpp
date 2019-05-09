@@ -3,16 +3,19 @@
 #include <string.h>
 #include <windows.h>
 #include <process.h>
+#include <iostream>
 
 #define BUF_SIZE 100
 #define NAME_SIZE 20
 
+using namespace std;
 unsigned WINAPI SendMsg(void * arg);
 unsigned WINAPI RecvMsg(void * arg);
 void ErrorHandling(const char * msg);
 
 char name[NAME_SIZE] = "[DEFAULT]";
 char msg[BUF_SIZE];
+char username[NAME_SIZE]; //유저 이름을 유저에게 직접 받기위한 변수
 
 int main(int argc, const char *argv[])
 {
@@ -21,15 +24,16 @@ int main(int argc, const char *argv[])
 	SOCKADDR_IN servAdr;
 	HANDLE hSndThread, hRcvThread;
 
-	if (argc != 4) {
-		printf("Usage : %s <IP> <port> <name>\n", argv[0]);
+	if (argc != 3) {
+		printf("Usage : %s <IP> <port>\n", argv[0]);
 		exit(1);
 	}
 
 	if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
 		ErrorHandling("WSAStartup() error!");
-
-	printf(name, "[%s]", argv[3]);
+	cout << "Please Your Name : ";
+	cin >> username;
+	sprintf_s(name, "[%s]", username);
 	hSock = socket(PF_INET, SOCK_STREAM, 0);
 
 	memset(&servAdr, 0, sizeof(servAdr));
@@ -60,14 +64,13 @@ unsigned WINAPI SendMsg(void * arg)   // send thread main
 	while (1)
 	{
 		fgets(msg, BUF_SIZE, stdin);
-		strcat_s(msg, ""); //입력한 문자에 NULL추가
 		if (!strcmp(msg, "q\n") || !strcmp(msg, "Q\n"))
 		{
 			closesocket(hSock);
 			exit(0);
 		}
-		printf(nameMsg, "%s %s", name, msg);
-		send(hSock, nameMsg, strlen(nameMsg), 0);
+		sprintf_s(nameMsg, "%s %s", name, msg);//sprintf 사용으로 뷁뷁뷁안뜬다
+		send(hSock, nameMsg, strlen(nameMsg)+1, 0); //+1로 NULL추가(?)
 	}
 	return 0;
 }
@@ -78,7 +81,7 @@ unsigned WINAPI RecvMsg(void * arg)   // read thread main
 	char nameMsg[NAME_SIZE + BUF_SIZE];
 
 	int strLen;
-	while (1) //받을때도 null까지 받아야하나?? 서버에서 null까지만보내주면 될거같다
+	while (1)
 	{
 		strLen = recv(hSock, nameMsg, NAME_SIZE + BUF_SIZE - 1, 0);
 		if (strLen == -1)
