@@ -5,6 +5,8 @@
 #include <process.h>
 #include <iostream>
 
+using namespace std;
+
 #define BUF_SIZE 100
 #define NAME_SIZE 20
 
@@ -25,7 +27,7 @@ int main(int argc, const char *argv[])
 	HANDLE hSndThread, hRcvThread;
 
 	if (argc != 3) {
-		printf("Usage : %s <IP> <port>\n", argv[0]);
+		cout << "Usage : " << argv[0] << " <IP> <port>\n" << endl;
 		exit(1);
 	}
 
