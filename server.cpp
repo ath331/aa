@@ -7,6 +7,11 @@
 #include <netinet/in.h>
 #include <pthread.h>
 
+#include<iostream> 
+using namespace std;
+#include <vector>
+#include <cstdio>
+
 #define BUF_SIZE  100
 #define MAX_CLNT 256
 
@@ -15,7 +20,7 @@ void send_msg(char * msg, int len);
 void error_handling(const char *message);
 
 int clnt_cnt = 0;
-int clnt_socks[MAX_CLNT];
+vector<int> CS; //add vector
 pthread_mutex_t mutx;
 
 int main(int argc, char *argv[])
@@ -31,7 +36,7 @@ int main(int argc, char *argv[])
 	
 	if(argc != 2)
 	{
-		printf("Usage : %s <port>\n", argv[0]);
+		cout << "Uszge : " << argv[0] << "<port>" << '\n';
 		exit(1);
 	}	
 
@@ -57,7 +62,7 @@ int main(int argc, char *argv[])
 		clnt_adr_sz = sizeof(clnt_adr);
 		clnt_sock = accept(serv_sock, (struct sockaddr*) &clnt_adr, (socklen_t *)&clnt_adr_sz);
 		pthread_mutex_lock(&mutx);
-		clnt_socks[clnt_cnt++] = clnt_sock;
+		CS.push_back(clnt_sock);
 		pthread_mutex_unlock(&mutx);
 
 		pthread_create(&t_id, NULL, handle_clnt, (void*) &clnt_sock );
@@ -84,15 +89,15 @@ void * handle_clnt(void * arg)
 		send_msg(msg, len);
 		
 	pthread_mutex_lock(&mutx);
-	for( i=0 ; i<clnt_cnt ; i++ )
+	for( i=0 ; i<clnt_cnt ; i++ )//remove client
 	{
-		if(clnt_sock == clnt_socks[i])
+		if(clnt_sock == CS[i])
 		{
 			while( i++ < clnt_cnt-1)
-				clnt_socks[i] = clnt_socks[i+1];
+				CS[i] = CS[i+1];
 			break;
 		}
-	}
+	} //vector.erase
 	clnt_cnt--;
 	pthread_mutex_unlock(&mutx);
 	close(clnt_sock);
@@ -103,8 +108,8 @@ void send_msg(char * msg, int len)
 {
 	int i;
 	pthread_mutex_lock(&mutx);
-	for( i=0 ; i<clnt_cnt ; i++ )
-		write(clnt_socks[i], msg, len+1);
+	for(vector<int>::size_type i = 0; i < CS.size() ; i++ )
+		write(CS[i], msg, len+1);
 	pthread_mutex_unlock(&mutx);
 }
 
