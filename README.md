@@ -5,7 +5,7 @@
 <div>
   ![Chat](https://user-images.githubusercontent.com/3
 9950003/57683899-9e40b900-766f-11e9-9542-f3b8ad30c35a.png)
-  ![Chat](./image/Chat.png)
+  ![Chat](C:\Users\ATH\git\Client_\image\Chat.png)
   서버가 클라이언트들의 접속을 확인
   
   ![Client](https://user-images.githubusercontent.com
