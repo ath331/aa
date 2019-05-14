@@ -4,11 +4,11 @@
 
 #모델 : 멀티스레드
 
-<div>
-  ![Chat](https://user-images.githubusercontent.com/3
-9950003/57683899-9e40b900-766f-11e9-9542-f3b8ad30c35a.png)
-  서버가 클라이언트들의 접속을 확인
+  ![Chat](https://user-images.githubusercontent.com
+/39950003/57684488-db597b00-7670-11e9-977b-3322b5860ab0.png)
+  서버가 클라이언트들의 접속을 확인.
   
   ![Client](https://user-images.githubusercontent.com
-/39950003/57683906-a26cd680-766f-11e9-9743-510ac28a69cb.png)
-  </div>
+/39950003/57684492-deed0200-7670-11e9-9d28-28c49cf29855.png)
+클라이언트들의 대화.
+닉네임 입력후 채팅을 입력하면 다른 사용자들에게 [닉네임] 메시지 형태로 출력된다.
