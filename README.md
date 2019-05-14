@@ -4,6 +4,6 @@
 다중접속 채팅 프로그램
 모델 : 멀티스레드
 
-![클라접속](./image/클라접속.png)
+![Chat](./image/Chat.png)
 서버가 클라이언트들의 접속을 확인.
-![채팅확인](./image/채팅확인.png)
+![Client](./image/Client.png)
