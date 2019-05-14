@@ -4,7 +4,7 @@
 
 #모델 : 멀티스레드
 
-  ![Chat](/image/Chat.jpg)
+  ![Chat](C:\Users\ATH\git\Client_\image\Chat.jpg)
   서버가 클라이언트들의 접속을 확인.
   
   ![Client](/image/Client.jpg)
