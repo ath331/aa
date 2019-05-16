@@ -82,19 +82,21 @@ void * handle_clnt(void * arg)
 	int clnt_sock =* ((int*) arg);
 	int str_len = 0, i;
 	char msg[BUF_SIZE];
-	
-	ssize_t len = sizeof(msg);
+	vector<int>::iterator iter;
 
+	ssize_t len = sizeof(msg);
+	
 	while((str_len = read ( clnt_sock, msg, len+1)) != 0 && str_len!= 0 )		
 		send_msg(msg, len);
 		
 	pthread_mutex_lock(&mutx);
-	for( i=0 ; i<clnt_cnt ; i++ )//remove client
+	for( i=0 ; i=clnt_sock ; i++ )//remove client
 	{
 		if(clnt_sock == CS[i])
 		{
-			while( i++ < clnt_cnt-1)
+			while( i++ < CS.size())
 				CS[i] = CS[i+1];
+				//CS.erase(i);
 			break;
 		}
 	} //vector.erase
