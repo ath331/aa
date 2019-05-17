@@ -19,7 +19,6 @@ void * handle_clnt(void * arg);
 void send_msg(char * msg, int len);
 void error_handling(const char *message);
 
-int clnt_cnt = 0;
 vector<int> CS; //add vector
 pthread_mutex_t mutx;
 
@@ -80,27 +79,25 @@ int main(int argc, char *argv[])
 void * handle_clnt(void * arg)
 {
 	int clnt_sock =* ((int*) arg);
-	int str_len = 0, i;
+	int str_len = 0;
 	char msg[BUF_SIZE];
 	vector<int>::iterator iter;
+	vector<int>::iterator iter2;
 
 	ssize_t len = sizeof(msg);
-	
-	while((str_len = read ( clnt_sock, msg, len+1)) != 0 && str_len!= 0 )		
-		send_msg(msg, len);
+	cout << "size : " << CS.size() << endl;
+	while((str_len = read ( clnt_sock, msg, len+1)) != 0 && str_len!= 0 )				send_msg(msg, len);
 		
 	pthread_mutex_lock(&mutx);
-	for( i=0 ; i=clnt_sock ; i++ )//remove client
+	for( iter=CS.begin() ; iter < CS.end() ; iter++ )//remove client
 	{
-		if(clnt_sock == CS[i])
+		if(clnt_sock == *iter)
 		{
-			while( i++ < CS.size())
-				CS[i] = CS[i+1];
-				//CS.erase(i);
-			break;
+				cout << "remove : " << *iter << endl;
+				iter2 = CS.erase(iter);
 		}
-	} //vector.erase
-	clnt_cnt--;
+	}
+	cout << "size : " << CS.size() << endl;
 	pthread_mutex_unlock(&mutx);
 	close(clnt_sock);
 	return NULL;
