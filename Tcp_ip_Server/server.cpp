@@ -12,8 +12,8 @@ using namespace std;
 #include <vector>
 #include <cstdio>
 
-#define BUF_SIZE  100
-#define MAX_CLNT 256
+const static int  BUF_SIZE = 100;
+const static int MAX_CLNT= 256;
 
 void * handle_clnt(void * arg);
 void send_msg(char * msg, int len);
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 		exit(1);
 	}	
 
-	pthread_mutex_init(&mutx, NULL );
+	pthread_mutex_init(&mutx, nullptr );
 	serv_sock = socket(PF_INET, SOCK_STREAM, 0);
 	if( serv_sock == -1 )
 		error_handling("socket() error!");
@@ -64,10 +64,11 @@ int main(int argc, char *argv[])
 		CS.push_back(clnt_sock);
 		pthread_mutex_unlock(&mutx);
 
-		pthread_create(&t_id, NULL, handle_clnt, (void*) &clnt_sock );
+		pthread_create(&t_id, nullptr, handle_clnt, (void*) &clnt_sock );
 		pthread_detach(t_id);
 		printf("Connected clinet IP : %s \n", inet_ntoa(clnt_adr.sin_addr));
 	}
+	
 
 	close(serv_sock);
 
@@ -81,33 +82,35 @@ void * handle_clnt(void * arg)
 	int clnt_sock =* ((int*) arg);
 	int str_len = 0;
 	char msg[BUF_SIZE];
-	vector<int>::iterator iter;
-	vector<int>::iterator iter2;
-
-	ssize_t len = sizeof(msg);
+	
+	size_t len = sizeof(msg);
 	cout << "size : " << CS.size() << endl;
-	while((str_len = read ( clnt_sock, msg, len+1)) != 0 && str_len!= 0 )				send_msg(msg, len);
-		
+	while((str_len = read ( clnt_sock, msg, len+1)) != 0 && str_len!= 0 )	
+		send_msg(msg, len);
+	
+	shutdown(clnt_sock, SHUT_WR); //graceful close
+	str_len = read(clnt_sock, msg, len+1);
+	cout << "client out " << endl;
 	pthread_mutex_lock(&mutx);
-	for( iter=CS.begin() ; iter < CS.end() ; iter++ )//remove client
+	for( auto iter/*: CS*/=CS.begin() ; iter < CS.end() ; iter++ )//remove client
 	{
 		if(clnt_sock == *iter)
 		{
-				cout << "remove : " << *iter << endl;
-				iter2 = CS.erase(iter);
+				cout << "remove : " << &iter << endl;
+				iter = CS.erase(iter);
 		}
 	}
 	cout << "size : " << CS.size() << endl;
 	pthread_mutex_unlock(&mutx);
+ 
 	close(clnt_sock);
-	return NULL;
+	return nullptr;
 }
 
 void send_msg(char * msg, int len)
 {
-	int i;
 	pthread_mutex_lock(&mutx);
-	for(vector<int>::size_type i = 0; i < CS.size() ; i++ )
+	for(auto i = 0 ; i<CS.size();i++)
 		write(CS[i], msg, len+1);
 	pthread_mutex_unlock(&mutx);
 }
