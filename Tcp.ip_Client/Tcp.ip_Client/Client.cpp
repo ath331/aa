@@ -7,8 +7,8 @@
 
 using namespace std;
 
-#define BUF_SIZE 100
-#define NAME_SIZE 20
+const static int  BUF_SIZE = 100;
+const static int NAME_SIZE = 20;
 
 using namespace std;
 unsigned WINAPI SendMsg(void * arg);
@@ -53,6 +53,7 @@ int main(int argc, const char *argv[])
 
 	WaitForSingleObject(hSndThread, INFINITE);
 	WaitForSingleObject(hRcvThread, INFINITE);
+
 	closesocket(hSock);
 	WSACleanup();
 	return 0;
@@ -86,10 +87,13 @@ unsigned WINAPI RecvMsg(void * arg)   // read thread main
 	while (1)
 	{
 		strLen = recv(hSock, nameMsg, NAME_SIZE + BUF_SIZE - 1, 0);
-		if (strLen == -1)
-			return -1;
-		nameMsg[strLen] = 0;
-		fputs(nameMsg, stdout);
+		if (strlen != 0)
+		{
+			if (strLen == -1)
+				return -1;
+			nameMsg[strLen] = 0;
+			fputs(nameMsg, stdout);
+		}
 	}
 	return 0;
 }
