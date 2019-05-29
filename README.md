@@ -4,18 +4,14 @@
 
 #모델 : 멀티스레드!
 
-![Server](
-https://user-images.githubusercontent.com/39950003/
-58557728-10152700-825a-11e9-9308-36807c5e6d2b.JPG)
+![Server](./image/Server.JPG)
   
  서버가 클라이언트들의 연결을 확인.
  size의 수는 현재 연결중인 클라이언트의 수를 말한다. 
  (클라이언트들이 연결/아웃 일때 출력)
   
   
-![Client](
-https://user-images.githubusercontent.com/
-39950003/58557756-1f947000-825a-11e9-9414-c3855f4f3951.JPG)
+![Client](./image/Client.JPG)
   
 클라이언트들의 대화.
 닉네임 입력후 채팅을 입력하면 다른 사용자들에게 [닉네임] 메시지 형태로 출력된다.
