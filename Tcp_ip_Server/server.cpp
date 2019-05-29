@@ -19,8 +19,8 @@ class Server
 {
 	int serv_sock;
 	int clnt_sock;
-	vector<int> CS;
-	pthread_mutex_t mutx;
+	static vector<int> CS;
+	static pthread_mutex_t mutx;
 	struct sockaddr_in serv_adr;
 	struct sockaddr_in clnt_adr;
 	int clnt_adr_sz;
@@ -29,6 +29,10 @@ class Server
 public:
 	Server(char* port)
 	{
+		serv_sock = socket(PF_INET, SOCK_STREAM, 0);
+		if( serv_sock == -1 )
+			error_handling("socket() error!");
+
 		memset(&serv_adr, 0, sizeof(serv_adr));
 		serv_adr.sin_family = AF_INET;
 	        serv_adr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -40,14 +44,11 @@ public:
 			error_handling("listen[] error!");
 	}
 
-	~Server();
+	~Server() {};
 
 	void connect()
 	{
 		pthread_mutex_init(&mutx, nullptr );
-		serv_sock = socket(PF_INET, SOCK_STREAM, 0);
-		if( serv_sock == -1 )
-			error_handling("socket() error!");
 
 		 while(1)
 		{	
@@ -63,9 +64,10 @@ public:
 			printf("Connected clinet IP : %s \n", inet_ntoa(clnt_adr.sin_addr));
 		}
 		 close(serv_sock);
+
 	}
 
-	 void* handle_clnt(void *arg)
+	 static void* handle_clnt(void *arg)
 	{
 		int clnt_sock =* ((int*) arg);
 		int str_len = 0;
@@ -96,7 +98,7 @@ public:
 		return nullptr;
 	}
 
-	void send_msg(char *msg, int len)
+	static void send_msg(char *msg, int len)
 	{		
 		pthread_mutex_lock(&mutx);
 		for(auto i = 0 ; i<CS.size();i++)
@@ -106,11 +108,14 @@ public:
 
 	void error_handling(const char *message)
 	{
-		        fputs(message, stderr);
-			        fputc('\n', stderr);
-				        exit(1);
+	        fputs(message, stderr);
+		fputc('\n', stderr);
+		exit(1);
 	}
 };
+
+pthread_mutex_t Server::mutx;
+vector<int> Server::CS;
 
 int main(int argc, char *argv[])
 {	
