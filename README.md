@@ -4,7 +4,7 @@
 
 #모델 : 멀티스레드!
 
-  ![Sercer](./image/클라이언트 인아웃 확인.jpg)
+  ![Server](./image/Server.jpg)
   
   서버가 클라이언트들의 접속을 확인.
   
