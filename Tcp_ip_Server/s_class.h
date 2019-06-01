@@ -25,7 +25,6 @@ class Server
 	struct sockaddr_in clnt_adr;
 	int clnt_adr_sz;
 	pthread_t t_id;
-
 public:
 	Server(char* port)
 	{
@@ -48,6 +47,7 @@ public:
 
 	void sc_accept()
 	{
+		Arg arg={ this, clnt_sock};
 		pthread_mutex_init(&mutx, nullptr );
 
 		 while(1)
@@ -59,12 +59,25 @@ public:
 			CS.push_back(clnt_sock);
 			pthread_mutex_unlock(&mutx);
 
-	                pthread_create(&t_id, nullptr,handle_clnt,(void*)&clnt_sock );
+	                pthread_create(&t_id, nullptr, handle_clnt_t, &arg);
 			pthread_detach(t_id);	
 			printf("Connected clinet IP : %s \n", inet_ntoa(clnt_adr.sin_addr));
 		}
 		 close(serv_sock);
 
+	}
+
+	
+	struct Arg
+	{
+		Server* p;
+		int asock;
+	};
+
+	static void* handle_clnt_t(void* p)
+	{
+		Arg* pArg = (Arg*) p;
+		pArg->p->handle_clnt(p->asock);
 	}
 
 	void* handle_clnt(void* arg)
@@ -90,7 +103,7 @@ public:
 				iter = CS.erase(iter);
 			}
 		}
-		cout << "size : " << CS.size() << endl;
+		cout << "people : " << CS.size() << endl;
 		pthread_mutex_unlock(&mutx);
 
 	
