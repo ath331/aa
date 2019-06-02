@@ -11,10 +11,10 @@
 using namespace std;
 #include <vector>
 #include <cstdio>
-#include"s_class.h"
+#include"server_class.h"
 
 int main(int argc, char *argv[])
-{	
+{
 	if(argc != 2)
 	{
 		cout << "Uszge : " << argv[0] << "<port>" << '\n';

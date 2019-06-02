@@ -70,14 +70,14 @@ public:
 	
 	struct Arg
 	{
-		Server* p;
+		Server* server;
 		int asock;
 	};
 
-	static void* handle_clnt_t(void* p)
+	static void* handle_clnt_t(void* arg_t)
 	{
-		Arg* pArg = (Arg*) p;
-		pArg->p->handle_clnt(p->asock);
+		Arg* pArg = (Arg*) arg_t;
+		pArg->server->handle_clnt((void*)pArg->asock);
 	}
 
 	void* handle_clnt(void* arg)
