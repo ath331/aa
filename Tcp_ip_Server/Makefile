@@ -1,13 +1,15 @@
 TARGET=sv
 CC=g++
 OP=-D REETRANT -lpthread
-OBJECT=main.o server_class.o
+OJPATH=objectfile/
+HDPATH=header/
+OBJECT=$(OJPATH)(main.o server_class.o)
 
-$(TARGET):$(OBJECT)
-	$(CC) -o $@ $(OBJECT) $(OP)
+$(TARGET):$(OJPATH)$(OBJECT)
+	$(CC) -o $(OJPATH)$@ $(OJPATH)$(OBJECT) $(OP)
 
-main.o:main.cpp server_class.h server_class.cpp
-server_class.o:server_class.cpp server_class.h
+$(OJPATH)main.o:main.cpp $(HDPATH)server_class.h server_class.cpp
+$(OJPATH)server_class.o:server_class.cpp $(HDPATH)server_class.h
 
 
 
