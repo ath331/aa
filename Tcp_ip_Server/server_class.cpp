@@ -11,7 +11,7 @@
 using namespace std;
 #include <vector>
 #include <cstdio>
-#include ./hdpath/"server_class.h"
+#include "./header/server_class.h"
 
 const static int  BUF_SIZE = 100;
 const static int MAX_CLNT= 256;
