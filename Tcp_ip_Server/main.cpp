@@ -12,6 +12,7 @@ using namespace std;
 #include <vector>
 #include <cstdio>
 #include "./header/server_class.h"
+#include "./header/client_class.h"
 
 int main(int argc, char *argv[])
 {

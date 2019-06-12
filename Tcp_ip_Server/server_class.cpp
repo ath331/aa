@@ -12,6 +12,7 @@ using namespace std;
 #include <vector>
 #include <cstdio>
 #include "./header/server_class.h"
+#include "./header/client_class.h"
 
 const static int  BUF_SIZE = 100;
 const static int MAX_CLNT= 256;
@@ -35,11 +36,11 @@ Server::Server(char* port)
 
 Server::~Server(){};
 
-struct Server::Arg
+/*struct Server::Arg
 {
 	Server* server;
 	int asock;
-};
+};*/
 
 void Server::sc_accept()
 	{
@@ -64,7 +65,7 @@ void Server::sc_accept()
 	}
 
 
-void* Server::handle_clnt_t(void* arg_t)
+/*void* Server::handle_clnt_t(void* arg_t)
 	{
 		Arg* pArg = (Arg*) arg_t;
 		pArg->server->handle_clnt(pArg->asock);
@@ -97,15 +98,15 @@ void* Server::handle_clnt(int arg)
 		pthread_mutex_unlock(&mutx);
 
 		close(clnt_sock);
-	}
+	}*/
 
-void Server::send_msg(char *msg, int len)
+/*void Server::send_msg(char *msg, int len)
 	{		
 		pthread_mutex_lock(&mutx);
 		for(auto i = 0 ; i<CS.size();i++)
 			write(CS[i], msg, len+1);
 		pthread_mutex_unlock(&mutx);
-	}
+	}*/
 
 void Server::error_handling(const char *message)
 	{

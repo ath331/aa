@@ -16,7 +16,7 @@ class Server
 {
 	int serv_sock;
 	int clnt_sock;
-	vector<int> CS;
+	//vector<int> CS;
 	pthread_mutex_t mutx;
 	struct sockaddr_in serv_adr;
 	struct sockaddr_in clnt_adr;
@@ -27,9 +27,9 @@ public:
 	~Server();
 
 	void sc_accept();
-	struct Arg;
-	static void* handle_clnt_t(void* arg_t);
-	void* handle_clnt(int arg);
-	void send_msg(char *msg, int len);
+	//struct Arg;
+	//static void* handle_clnt_t(void* arg_t);
+	//void* handle_clnt(int arg);
+	//void send_msg(char *msg, int len);
 	void error_handling(const char *message);
 };
