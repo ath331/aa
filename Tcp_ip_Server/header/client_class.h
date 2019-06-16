@@ -14,18 +14,13 @@ using namespace std;
 
 class Client
 {
-	//int serv_sock;
-	//int clnt_sock;
-	vector<int> CS;
 	pthread_mutex_t mutx;
-	//struct sockaddr_in serv_adr;
-	//struct sockaddr_in clnt_adr;
-	//int clnt_adr_sz;
 	pthread_t t_id;
 public:
 	Client();
 	~Client();
-
+	
+	vector<int> CS;
 	struct Arg;
 	static void* handle_clnt_t(void* arg_t);
 	void* handle_clnt(int arg);

@@ -16,15 +16,15 @@ using namespace std;
 const static int  BUF_SIZE = 100;
 const static int MAX_CLNT= 256;
 
-Client::Client(){};
-Client::~Client(){};
-
 struct Client::Arg
 {
 	Client* client;
 	int asock;
 };
-
+Client::Client()
+{
+};
+Client::~Client(){};
 
 void* Client::handle_clnt_t(void* arg_t)
 	{
