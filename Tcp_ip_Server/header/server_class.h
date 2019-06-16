@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -7,7 +6,7 @@
 #include <netinet/in.h>
 #include <pthread.h>
 
-#include<iostream> 
+#include <iostream>
 using namespace std;
 #include <vector>
 #include <cstdio>
