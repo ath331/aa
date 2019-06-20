@@ -21,7 +21,7 @@ class Client_Manager
 	pthread_t t_id;
 public:
 	Client_Manager(){pthread_mutex_init(&mutx,NULL);};
-	~Client_Manager();
+	~Client_Manager(){};
 	
 	vector<int> CS;
 	struct Arg
