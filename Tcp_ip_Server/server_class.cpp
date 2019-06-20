@@ -1,12 +1,21 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <pthread.h>
+
+#include <iostream>
+using namespace std;
+#include <vector>
+#include <cstdio>
 
 #include "./header/server_class.h"
 #include "./header/client_class.h"
 
-const static int  BUF_SIZE = 100;
-const static int MAX_CLNT= 256;
-
-Client client;
+Client_Manager client;
 
 Server::Server(char* port)
 	{
@@ -35,13 +44,13 @@ void Server::sc_accept()
 		{	
 			clnt_adr_sz = sizeof(clnt_adr);
 			clnt_sock = accept(serv_sock, (struct sockaddr*) &clnt_adr, (socklen_t *)&clnt_adr_sz);
-			Client::Arg arg = {this, clnt_sock};
+			Client_Manager::Arg arg = {nullptr, clnt_sock};
 
 			pthread_mutex_lock(&mutx);
 			client.CS.push_back(clnt_sock);
 			pthread_mutex_unlock(&mutx);
 
-	                pthread_create(&t_id, nullptr, client.handle_clnt_t, reinterpret_cast<void*>(&arg));
+	                pthread_create(&t_id, nullptr, Client_Manager::handle_clnt_t, reinterpret_cast<void*>(&arg));
 			pthread_detach(t_id);	
 			printf("Connected clinet IP : %s \n", inet_ntoa(clnt_adr.sin_addr));
 		}
