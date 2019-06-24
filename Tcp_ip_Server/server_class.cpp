@@ -15,12 +15,8 @@ using namespace std;
 #include "./header/server_class.h"
 #include "./header/client_class.h"
 
-<<<<<<< HEAD
 const static int BUF_SIZE = 100;
 const static int MAX_CLNT= 256;
-=======
-Client_Manager client;
->>>>>>> ee52ed9c6f09ef356edb080757719a627aa5f636
 
 Server::Server(char* port)
 	{
@@ -47,14 +43,10 @@ void Server::sc_accept()
 
 		 while(1)
 		{
-			Client *client = new Client;	
+			Client_Manager *client = new Client_Manager;	
 			clnt_adr_sz = sizeof(clnt_adr);
 			clnt_sock = accept(serv_sock, (struct sockaddr*) &clnt_adr, (socklen_t *)&clnt_adr_sz);
-<<<<<<< HEAD
 			client->Arg arg{nullptr,clnt_sock};
-=======
-			client.Arg arg = {nullptr, clnt_sock};
->>>>>>> ee52ed9c6f09ef356edb080757719a627aa5f636
 
 			pthread_mutex_lock(&mutx);
 			(*client).CS.push_back(clnt_sock);
