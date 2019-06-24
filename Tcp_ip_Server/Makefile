@@ -4,5 +4,5 @@ all:
 	cd $(OJPATH) &&  make
 
 clean:
-	cd $(OJPATH) && make clead
+	cd $(OJPATH) && make clean
 

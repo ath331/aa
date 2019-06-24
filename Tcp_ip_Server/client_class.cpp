@@ -1,27 +1,30 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <cstdio>
 
-#include "./header/client_class.h"
+#include"./header/client_class.h"
 
-const static int  BUF_SIZE = 100;
-const static int MAX_CLNT= 256;
+const static int BUF_SIZE = 100;
+const static int MAX_CLNT = 256;
 
-struct Client::Arg
+struct Client_Manager::Arg
 {
-	Client* client;
-	int asock;
+       	Client_Manager* client;
+       	int asock;
 };
-Client::Client()
-{
-};
-Client::~Client(){};
 
-void* Client::handle_clnt_t(void* arg_t)
+void* Client_Manager::handle_clnt_t(void* arg_t)
 	{
 		Arg* pArg = (Arg*) arg_t;
 		pArg->client->handle_clnt(pArg->asock);
 	}
 
-void* Client::handle_clnt(int arg)
+void* Client_Manager::handle_clnt(int arg)
 	{
 		int clnt_sock = arg;
 		int str_len = 0;
@@ -34,7 +37,6 @@ void* Client::handle_clnt(int arg)
 	
 		shutdown(clnt_sock, SHUT_WR); //graceful close
 		str_len = read(clnt_sock, msg, len+1);
-		//cout << "client out " << endl;
 		pthread_mutex_lock(&mutx);
 		for( auto iter = CS.begin() ; iter < CS.end() ; iter++ )//remove client
 		{
@@ -48,4 +50,12 @@ void* Client::handle_clnt(int arg)
 		pthread_mutex_unlock(&mutx);
 
 		close(clnt_sock);
+	}
+
+void Client_Manager::send_msg(char *msg, int len)
+	{
+		pthread_mutex_lock(&mutx);
+		for(auto i = 0 ; i<CS.size();i++)
+			write(CS[i], msg, len+1);
+		pthread_mutex_unlock(&mutx);
 	}

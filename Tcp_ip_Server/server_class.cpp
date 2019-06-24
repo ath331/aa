@@ -1,10 +1,26 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <pthread.h>
+
+#include <iostream>
+using namespace std;
+#include <vector>
+#include <cstdio>
 
 #include "./header/server_class.h"
 #include "./header/client_class.h"
 
+<<<<<<< HEAD
 const static int BUF_SIZE = 100;
 const static int MAX_CLNT= 256;
+=======
+Client_Manager client;
+>>>>>>> ee52ed9c6f09ef356edb080757719a627aa5f636
 
 Server::Server(char* port)
 	{
@@ -34,7 +50,11 @@ void Server::sc_accept()
 			Client *client = new Client;	
 			clnt_adr_sz = sizeof(clnt_adr);
 			clnt_sock = accept(serv_sock, (struct sockaddr*) &clnt_adr, (socklen_t *)&clnt_adr_sz);
+<<<<<<< HEAD
 			client->Arg arg{nullptr,clnt_sock};
+=======
+			client.Arg arg = {nullptr, clnt_sock};
+>>>>>>> ee52ed9c6f09ef356edb080757719a627aa5f636
 
 			pthread_mutex_lock(&mutx);
 			(*client).CS.push_back(clnt_sock);
