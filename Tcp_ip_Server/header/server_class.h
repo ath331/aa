@@ -1,12 +1,7 @@
-#include <stdlib.h>
-#include <arpa/inet.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <pthread.h>
+#pragma once
 
 #include <iostream>
 using namespace std;
-#include <cstdio>
 
 class Server
 {

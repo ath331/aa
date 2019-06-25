@@ -1,3 +1,5 @@
+#pragma once
+
 #include <pthread.h>
 
 #include<iostream> 
@@ -13,7 +15,11 @@ public:
 	~Client_Manager(){};
 	
 	vector<int> CS;
-	struct Arg;
+	struct Arg
+	{
+		Client_Manager* client;
+		int asock;
+	};
 	static void* handle_clnt_t(void* arg_t);
 	void* handle_clnt(int arg);
 	void send_msg(char *msg, int len);

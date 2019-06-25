@@ -12,12 +12,6 @@
 const static int BUF_SIZE = 100;
 const static int MAX_CLNT = 256;
 
-struct Client_Manager::Arg
-{
-       	Client_Manager* client;
-       	int asock;
-};
-
 void* Client_Manager::handle_clnt_t(void* arg_t)
 	{
 		Arg* pArg = (Arg*) arg_t;

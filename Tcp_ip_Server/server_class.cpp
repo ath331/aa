@@ -9,11 +9,10 @@
 
 #include <iostream>
 using namespace std;
-#include <vector>
 #include <cstdio>
 
-#include "./header/server_class.h"
 #include "./header/client_class.h"
+#include "./header/server_class.h"
 
 const static int BUF_SIZE = 100;
 const static int MAX_CLNT= 256;
@@ -43,20 +42,20 @@ void Server::sc_accept()
 
 		 while(1)
 		{
-			Client_Manager *client = new Client_Manager;	
+			Client_Manager client;
+			Client_Manager::Arg arg;
 			clnt_adr_sz = sizeof(clnt_adr);
 			clnt_sock = accept(serv_sock, (struct sockaddr*) &clnt_adr, (socklen_t *)&clnt_adr_sz);
-			client->Arg arg{nullptr,clnt_sock};
+			arg={nullptr,clnt_sock};
 
 			pthread_mutex_lock(&mutx);
-			(*client).CS.push_back(clnt_sock);
+			client.CS.push_back(clnt_sock);
 			pthread_mutex_unlock(&mutx);
 
-	                pthread_create(&t_id, nullptr, client->handle_clnt_t, reinterpret_cast<void*>(&arg));
+	                pthread_create(&t_id, nullptr, client.handle_clnt_t, reinterpret_cast<void*>(&arg));
 			pthread_detach(t_id);	
 			printf("Connected clinet IP : %s \n", inet_ntoa(clnt_adr.sin_addr));
 		}
-		 delete client;
 		 close(serv_sock);
 
 	}
