@@ -11,6 +11,15 @@
 
 const static int BUF_SIZE = 100;
 const static int MAX_CLNT = 256;
+vector<int> Client_Manager::CS = vector<int>();
+
+Client_Manager::Client_Manager(int clnt_sock)
+{
+	pthread_mutex_init(&mutx, nullptr);
+	pthread_mutex_lock(&mutx);
+	CS.push_back(clnt_sock);
+	pthread_mutex_unlock(&mutx);
+}
 
 void* Client_Manager::handle_clnt_t(void* arg_t)
 	{

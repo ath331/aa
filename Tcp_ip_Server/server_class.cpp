@@ -42,15 +42,11 @@ void Server::sc_accept()
 
 		 while(1)
 		{
-			Client_Manager client;
-			Client_Manager::Arg arg;
 			clnt_adr_sz = sizeof(clnt_adr);
 			clnt_sock = accept(serv_sock, (struct sockaddr*) &clnt_adr, (socklen_t *)&clnt_adr_sz);
+			Client_Manager client(clnt_sock);
+			Client_Manager::Arg arg;
 			arg={nullptr,clnt_sock};
-
-			pthread_mutex_lock(&mutx);
-			client.CS.push_back(clnt_sock);
-			pthread_mutex_unlock(&mutx);
 
 	                pthread_create(&t_id, nullptr, client.handle_clnt_t, reinterpret_cast<void*>(&arg));
 			pthread_detach(t_id);	

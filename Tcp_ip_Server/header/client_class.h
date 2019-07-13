@@ -11,10 +11,11 @@ class Client_Manager
 	pthread_mutex_t mutx;
 	pthread_t t_id;
 public:
-	Client_Manager(){pthread_mutex_init(&mutx,NULL);};
+	Client_Manager(){};
+	Client_Manager(int clnt_sock);
 	~Client_Manager(){};
 	
-	vector<int> CS;
+	static	vector<int> CS;
 	struct Arg
 	{
 		Client_Manager* client;
@@ -24,3 +25,4 @@ public:
 	void* handle_clnt(int arg);
 	void send_msg(char *msg, int len);
 };
+
